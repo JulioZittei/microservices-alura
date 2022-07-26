@@ -10,6 +10,12 @@ public class AddressDTO {
 	private String zipCode;
 	
 	
+	@Override
+	public String toString() {
+		return "street:" + street + ", number:" + number + ", complement:" + complement + ", state:" + state
+				+ ", zipCode:" + zipCode;
+	}
+
 	public String getStreet() {
 		return street;
 	}

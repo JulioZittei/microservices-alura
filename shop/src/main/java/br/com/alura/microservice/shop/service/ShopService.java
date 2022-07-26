@@ -1,33 +1,30 @@
 package br.com.alura.microservice.shop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import br.com.alura.microservice.shop.client.ProviderClient;
 import br.com.alura.microservice.shop.controller.dto.InfoProviderDTO;
+import br.com.alura.microservice.shop.controller.dto.OrderInfoDTO;
 import br.com.alura.microservice.shop.controller.dto.ShopDTO;
+import br.com.alura.microservice.shop.model.Shop;
 
 @Service
 public class ShopService {
 
 	@Autowired
-	private RestTemplate client;
+	private ProviderClient providerClient;
 	
-	@Autowired
-	private DiscoveryClient eurekaClient;
-	
-	public void shop(ShopDTO shop) {
+	public Shop shop(ShopDTO shop) {
 		
-		ResponseEntity<InfoProviderDTO> exchange = 
-				client.exchange("http://provider/info/" + shop.getAddress().getState(), 
-				HttpMethod.GET, null, InfoProviderDTO.class);
+		InfoProviderDTO infoProvider = providerClient.getInfoByState(shop.getAddress().getState());
 		
-		eurekaClient.getInstances("provider").stream().forEach((provider) -> {
-			System.out.println("localhost:" + provider.getPort());
-		});;
-		
-		System.out.println(exchange.getBody().getAddress());
+		OrderInfoDTO order = providerClient.order(shop.getItems());
+		Shop orderedShop = new Shop();
+		orderedShop.setOrderedId(order.getId());
+		orderedShop.setPreparationTime(order.getPreparationTime());
+		orderedShop.setDestinationAddress(shop.getAddress().toString());
+		return orderedShop;
+
 	}
 }

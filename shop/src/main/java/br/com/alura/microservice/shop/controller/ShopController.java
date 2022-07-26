@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.microservice.shop.controller.dto.ShopDTO;
+import br.com.alura.microservice.shop.model.Shop;
 import br.com.alura.microservice.shop.service.ShopService;
 
 @RestController
@@ -17,8 +18,8 @@ public class ShopController {
 	private ShopService shopService;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void shop(@RequestBody ShopDTO shop) {
-		shopService.shop(shop);
+	public Shop shop(@RequestBody ShopDTO shop) {
+		return shopService.shop(shop);
 	}
 
 }
