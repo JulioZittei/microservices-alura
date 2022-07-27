@@ -3,6 +3,8 @@ package br.com.alura.microservice.provider.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import br.com.alura.microservice.provider.repository.RequestOrderRepository;
 @Service
 public class RequestOrderService {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(RequestOrderService.class);
+	
 	@Autowired
 	private RequestOrderRepository requestOrderRepository;
 	
@@ -28,6 +32,7 @@ public class RequestOrderService {
 			return null;
 		}
 		
+		LOG.info("Creating order");
 		List<OrderItem> orderItems = toOrderItem(items);
 		RequestOrder order = new RequestOrder(orderItems);
 		order.setPreparationTime(items.size());
@@ -35,6 +40,8 @@ public class RequestOrderService {
 	}
 	
 	public RequestOrder getOrderById(Long id) {
+		
+		LOG.info("Finding order by id {}", id);
 		return requestOrderRepository.findById(id).orElse(new RequestOrder());
 	}
 	
