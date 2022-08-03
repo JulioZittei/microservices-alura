@@ -20,7 +20,7 @@ This project was developed with the following technologies:
 - [Spring Cloud Netflix Eureka](https://spring.io/projects/spring-cloud-netflix)
 - [Spring Cloud OpenFeign](https://spring.io/projects/spring-cloud-openfeign)
 - [Spring Cloud Config](https://spring.io/projects/spring-cloud-config)
-- [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-config)
+- [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth)
 - [Papertrail](https://www.papertrail.com/)
 - [MySQL](https://www.mysql.com/)
 
